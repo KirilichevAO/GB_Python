@@ -3,16 +3,23 @@
 # Для этого Петя делает две подсказки. Он называет сумму этих чисел S и их произведение P.
 # Помогите Кате отгадать задуманные Петей числа.
 
-import random
+# import random
+#
+# x = random.randint(1, 1000)
+# y = random.randint(1, 1000)
+#
+# s = x + y
+# p = x * y
+#
+# x1 = int((s - ((-s) ** 2 - 4 * p) ** 0.5) / 2)
+# y1 = int((s + ((-s) ** 2 - 4 * p) ** 0.5) / 2)
+#
+# print(s, p)
+# print(x1, y1)
 
-x = random.randint(1, 1000)
-y = random.randint(1, 1000)
-
-s = x + y
-p = x * y
-
-x1 = int((s - ((-s) ** 2 - 4 * p) ** 0.5) / 2)
-y1 = int((s + ((-s) ** 2 - 4 * p) ** 0.5) / 2)
-
-print(s, p)
-print(x1, y1)
+x = int(input())
+y = int(input())
+for i in range(x):
+    for j in range(y):
+        if x == i + j and y == i * j:
+            print(i, j)
