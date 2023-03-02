@@ -18,3 +18,4 @@ if summa_first_part == summa_second_part:
     print('yes')
 else:
     print('no')
+
