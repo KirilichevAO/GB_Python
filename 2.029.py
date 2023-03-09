@@ -11,11 +11,26 @@
 # - 3 этап: 264 -> 2+6+4 -> 12 -> 1+2 -> 3
 # - 3 этап: [3, 1, 5, 5, 3, 5, 4]
 # - 4 этап: [3, 1, 5, 4]
+
 import random
 
 list = [random.randint(1000, 9999) for _ in range(7)]
 print(list)
-
+list2 = []
+list3 = []
 number = input('Введите однозначное, положительное число: ')
 
+for i in list:
+    el = str(i)
+    if number in el:
+        el = el.replace(number, '')
+    list2.append(el)
+print(list2)
 
+for i in list2:
+    sum_num = sum([(int(el)) for el in i])
+    while sum_num > 9:
+        sum_num = sum([(int(el)) for el in str(sum_num)])
+    list3.append(sum_num)
+print(list3)
+print(set(list3))
