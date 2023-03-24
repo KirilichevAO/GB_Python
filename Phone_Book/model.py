@@ -21,23 +21,34 @@ def save_file():
         file.write(data)
 
 
-def get_phone_book():
+def get_phone_book(): # показать контакты
     return phone_book
 
 
-def add_contact(contact: dict):
+def add_contact(contact: dict): # добавить контакты
     phone_book.append(contact)
 
 
-def change_contact(contact: dict, index: int):
+def change_contact(contact: dict, index: int): # изменить контакт
     phone_book.pop(index - 1)
     phone_book.insert(index - 1, contact)
 
 
-def find_contact(search: str) -> list[dict]:
+def find_contact(search: str) -> list[dict]: # найти контакт
     result = []
     for contact in phone_book:
         for field in contact.values():
             if search.lower() in field.lower():
                 result.append(contact)
     return result
+
+
+def dell_contact(search): # удаление контакта
+    for contact in range(len(phone_book)):
+        if phone_book[contact]['name'] == search:
+            del phone_book[contact]
+            break
+
+
+
+

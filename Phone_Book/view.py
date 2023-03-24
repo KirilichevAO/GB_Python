@@ -1,7 +1,7 @@
 import text_filds
 
 
-def main_menu() -> int:
+def main_menu() -> int: # меню
     print(text_filds.main_menu)
     lenght_menu = len(text_filds.main_menu.split('\n')) - 1
     while True:
@@ -12,19 +12,19 @@ def main_menu() -> int:
             print(f'Введите ЧИСЛО от 1 до {lenght_menu}')
 
 
-def show_contacts(book: list[dict], error_massage: str):
+def show_contacts(book: list[dict], error_massage: str): # показать контакт
     if not book:
         print(error_massage)
         return False
     else:
-        for i, contact in enumerate(book):
+        for i, contact in enumerate(book, 1):
             print(f'{i}. {contact.get("name"): <20} '
                   f'{contact.get("phone"): <20} '
                   f'{contact.get("comment"): <20}')
         return True
 
 
-def add_contact() -> dict:
+def add_contact() -> dict: # добавить контакт
      name = input('Введите имя: ')
      phone = input('Введите номер телефона: ')
      comment = input('Введите комментарий: ')
@@ -39,7 +39,7 @@ def input_search(massege):
     return input(massege)
 
 
-def change_contact(book: list[dict], index: int):
+def change_contact(book: list[dict], index: int): # изменить контакт
     print('Введите новые данные или оставьте пустое поле, если нет изменений')
     contact = add_contact()
     return {'name': contact.get('name') if contact.get('name') else book[index - 1].get('name'),
