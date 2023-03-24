@@ -15,9 +15,9 @@
 # коммент
 
 def menu():
-    phone_book_dict = {}
+    dict_phnbk = {}
     while True:
-        number = int(input('''Меню:
+        anc = int(input('''Меню:
     1. Показать все контакты
     2. Найти контакт
     3. Добавить контакт
@@ -25,46 +25,44 @@ def menu():
     5. Удалить контакт
     6. Выход
 Выберите пункт меню: '''))
-        if number == 1: # 1. Показать все контакты
-            if len(phone_book_dict) == 0:
-                phone_book_dict = open_file()
-            if len(phone_book_dict) == 0:
-                print('Справочник пуст!')
+
+        if anc == 1:
+            if len(dict_phnbk) == 0:
+                dict_phnbk = open_read_dir()
+            if len(dict_phnbk) == 0:
+                print('Справочник пуст')
             else:
-                print(phone_book_dict)
-        elif number == 2: # 2. Найти контакт
-            search_contact(phone_book_dict)
-        elif number == 3: # 3. Добавить контакт
-            value_new_cnt = add_cntc(phone_book_dict)
+                print(dict_phnbk)
+        elif anc == 2:
+            cntc_find(dict_phnbk)
+        elif anc == 3:
+            value_new_cnt = add_cntc(dict_phnbk)
             print(value_new_cnt)
-            phone_book_dict.update(value_new_cnt)
-            save_dir(phone_book_dict)
-            print('Контакт добавлен!')
-        elif number == 4: # 4. Изменить контакт
-            new_cntc = search_contact(phone_book_dict)
-            add_cntc(phone_book_dict, new_cntc)
-        elif number == 5: # 5. Удалить контакт
-            new_cntc = search_contact(phone_book_dict)
-            print(f'Контакт: {new_cntc[0]} удален!')
-            save_dir(phone_book_dict)
-        elif number == 6: # 6. Выход
+            dict_phnbk.update(value_new_cnt)
+            save_dir(dict_phnbk)
+        elif anc == 4:
+            cntc_change(dict_phnbk)
+            save_dir(dict_phnbk)
+        elif anc == 5:
+            cntc_dell(dict_phnbk)
+            save_dir(dict_phnbk)
+        elif anc == 6:
             print('End')
             break
         else:
             print('Введите ещё раз')
 
 
-def open_file(): # Открытие
-    phone_book_dict = {}
+def open_read_dir():
+    dict_phnbk = {}
     with open('phonebook.txt', 'r') as f:
-        for contact in f.readlines():
-            key, value = contact.strip().split(':')
-            phone_book_dict[key] = value
-        # print(phone_book_dict)
-        return phone_book_dict
+        for line_cntc in f.readlines():
+            key, value = line_cntc.strip().split(':')
+            dict_phnbk[key] = value
+        return dict_phnbk
 
 
-def save_dir(dict_phnbk): # Сохранение
+def save_dir(dict_phnbk):
     str_phnbk = ''
     print(dict_phnbk)
     for key, value in dict_phnbk.items():
@@ -73,7 +71,7 @@ def save_dir(dict_phnbk): # Сохранение
         f.write(str_phnbk)
 
 
-def add_cntc(dict_phnbk, new_cntc_in = [0]): # Добавление
+def add_cntc(dict_phnbk, new_cntc_in = [0]):
     if len(new_cntc_in) < 2:
         name_cntc = input('Введите Имя: ')
         phone_cntc = input('Введите телефон: ')
@@ -81,19 +79,37 @@ def add_cntc(dict_phnbk, new_cntc_in = [0]): # Добавление
         cntc_list = [phone_cntc, comment_cntc]
     else:
         name_cntc, cntc_list = tuple(new_cntc_in)
-    # dict_phnbk[name_cntc] = dict_phnbk.setdefault(name_cntc, cntc_list)
     dict_phnbk.setdefault(name_cntc, cntc_list)
-    # print(f'{name_cntc}, {dict_phnbk[name_cntc]}')
+    print(f'Контакт {name_cntc} добавлен!')
     return dict_phnbk
 
 
-def search_contact(phone_dict): # Поиск контакта
-    name_contact = input('Введите Имя: ')
-    if name_contact in phone_dict:
-        print(f'{name_contact}: {phone_dict[name_contact]}')
-        return [name_contact, phone_dict[name_contact]]
+def cntc_find(dict_phnbk):
+    name_cntc = input('Введите Имя: ')
+    if name_cntc in dict_phnbk:
+        print(f'{name_cntc}: {dict_phnbk[name_cntc]}')
+        return [name_cntc, dict_phnbk[name_cntc]]
     else:
-        print('Контакт не найден!')
+        print(f'Не найдено')
 
 
+def cntc_change(dict_phnbk):
+    name_cntc = input('Введите Имя изменяемого контакта: ')
+    if name_cntc in dict_phnbk:
+        print(f'{name_cntc}: {dict_phnbk[name_cntc]}')
+        phone = input('Введите новый номер: ')
+        comment = input('Введите новый комментарий: ')
+        dict_phnbk[name_cntc] = phone, comment
+        print(f'Контакт {name_cntc} изменен!')
+    else:
+        print(f'Не найдено')
+
+
+def cntc_dell(dict_phnbk):
+    name_cntc = input('Введите Имя для удаления: ')
+    if name_cntc in dict_phnbk:
+        del dict_phnbk[name_cntc]
+        print(f'Контакт {name_cntc} удален!')
+    else:
+        print(f'Не найдено')
 menu()
